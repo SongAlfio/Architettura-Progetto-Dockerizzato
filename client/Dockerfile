@@ -9,3 +9,5 @@ RUN npm i -g @angular/cli@14
 COPY . .
 EXPOSE 4200
 CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check"]
+
+
