@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AnimalsService } from './animals.service';
+import { Animal, VettAnimal } from './animals.service';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
-  data = {};
-  constructor(private http: HttpClient)
+  data = new Array<Animal>();
+  //Mi faccio iniettare l'animal servce
+  constructor(private animalService : AnimalsService)
   {
-    this.http.get("https://5000-songalfio-architetturap-6vb1ckfxav1.ws-eu111.gitpod.io/simple_json")
-    .subscribe(
-      (data) => 
-      {
-        this.data = data;
-        console.log(data);
-      }
+    //Mi sottoscrivo al servizio
+    console.log(this.data)
+    this.animalService.getAnimals().subscribe(
+      (data: VettAnimal)=>{this.data = data['animals']}
     )
   }
+
 }
