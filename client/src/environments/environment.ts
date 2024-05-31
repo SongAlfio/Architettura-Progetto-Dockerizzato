@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrlServer: 'https://5000-songalfio-architetturap-unfkbsjomp3.ws-eu114.gitpod.io'
+  baseUrlServer: 'https://5000-songalfio-architetturap-e5ohz75mge1.ws-eu114.gitpod.io/'
 };
 
 /*

@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(private animalService : AnimalsService)
   {
     //Mi sottoscrivo al servizio
-    console.log(this.data)
+    console.log("hello")
     this.animalService.getAnimals().subscribe(
       (data: VettAnimal)=>{this.data = data['animals']}
     )
