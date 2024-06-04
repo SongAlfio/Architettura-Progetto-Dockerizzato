@@ -1,5 +1,12 @@
 version: '3.7'
 services:
+  nginx:
+      restart: always
+      build:
+        dockerfile: Dockerfile
+        context: ./nginx
+      ports:
+        - 8000:8000
   client:
       build:
         dockerfile: Dockerfile
@@ -14,25 +21,28 @@ services:
         - ./client:/app
       ports:
         - 4200:4200
-  server:
+  api-server:
       build:
         dockerfile: Dockerfile
         context: ./server
+      environment: 
+        - MONGO_INITDB_DATABASE=animal_db
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=pass
       volumes:
         - ./server:/app
       ports:
         - 5000:5000
   mongo-server:
-
-    image: mongo:latest     #Possiamo specificare 'immagine anche da qui senza usare un Dockerfile
-    hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo
-    environment:            #setta alcune variabili d'ambiente
-      - MONGO_INITDB_DATABASE=animal_db
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
-    volumes:
-      #Crea un nuovo bineded volume per il container di mongoDB (condividento il file init-db.js)
-      # https://stackoverflow.com/questions/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
-      - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    
-    ports:
-      - 27017:27017
+      image: mongo:latest     #Possiamo specificare 'immagine anche da qui senza usare un Dockerfile
+      hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo
+      environment:            #setta alcune variabili d'ambiente
+        - MONGO_INITDB_DATABASE=animal_db
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=pass
+      volumes:
+        #Crea un nuovo bineded volume per il container di mongoDB (condividento il file init-db.js)
+        # https://stackoverflow.com/questions/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
+        - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    
+      ports:
+        - 27017:27017
