@@ -1,12 +1,5 @@
 version: '3.7'
 services:
-  nginx:
-      restart: always
-      build:
-        dockerfile: Dockerfile
-        context: ./nginx
-      ports:
-        - 8000:8000
   client:
       build:
         dockerfile: Dockerfile
@@ -46,3 +39,10 @@ services:
         - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    
       ports:
         - 27017:27017
+  nginx:
+      restart: always
+      build:
+        dockerfile: Dockerfile
+        context: ./nginx
+      ports:
+        - 8080:8080
